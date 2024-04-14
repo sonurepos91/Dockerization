@@ -1,0 +1,49 @@
+# Spring Application Name And Profiles Settings
+spring:
+  profiles:
+    active: local
+  application:
+    name: Dockerization
+
+#Spring DataBase Connection Settings
+  datasource:
+    url: jdbc:postgresql://localhost:5432/commerce
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+# Connection Pool is a cache of Database Connection Objects
+#Connection Pool Settings
+    hikari:
+      #Pool Settings
+      pool-name: HikariPool
+      maximum-pool-size: 10
+
+      #Pool Timeout Settings
+      connection-timeout: 30000 # Maximum Time a client will wait in milliseconds to get a Connection from Connection Pool
+      idle-timeout: 60000 # Maximum Time a Connection Object can remain idle in the Connection Pool
+      max-lifetime: 1800000 # Maximum Life of a Connection Object in Connection Pool
+
+      #Pool Connection Validation Settings
+      auto-commit: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+
+#Port and Context Path Settings
+server:
+  servlet:
+    context-path: /lifecycle/v1/
+  port: 9073
+
+#Spring Boot Actuator Exposure Settings
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,loggers,env,beans,metrics,threaddump"
